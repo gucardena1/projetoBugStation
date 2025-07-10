@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Atualizar Status</title>
+
+    <link rel="icon" href="/static/favicon3.ico"type="image/png">
+</head>
+<body>
+    <h1>Atualizar Status do Bug #{{ bug.id }}</h1>
+    <form method="post">
+        <p>Novo Status:
+            <select name="status">
+                <option>Em andamento</option>
+                <option>Resolvido</option>
+                <option>Fechado</option>
+                <option>Rejeitado</option>
+            </select>
+        </p>
+        <p><button type="submit">Atualizar</button></p>
+    </form>
+    <p><a href="{{ url_for('index') }}">Voltar</a></p>
+</body>
+</html>
+
+
+<style>
+    body {
+    background-color: #121c2a;
+    color: #d0d6e1;
+    font-family: Arial, sans-serif;
+    margin: 40px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+form {
+    background-color: #1e2a3a;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+p {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+select {
+    background-color: #25344a;
+    border: none;
+    color: #d0d6e1;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+select:hover, select:focus {
+    background-color: #2b3b52;
+    outline: none;
+}
+
+button {
+    background-color: #3467eb;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2454c7;
+}
+
+a {
+    display: block;
+    text-align: center;
+    margin-top: 25px;
+    color: #5ea0ff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #3a78d8;
+}
+
+</style>

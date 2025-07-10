@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>BugStation</title>
+    
+    <link rel="icon" href="/static/favicon3.ico"type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121c2a;
+            color: #d0d6e1;
+            font-family: Arial, sans-serif;
+        }
+        .custom-table {
+            background-color: #1e2a3a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .custom-table th {
+            background-color: #25344a;
+            color: #ffffff;
+        }
+        .custom-table tr:hover {
+            background-color: #2b3b52;
+        }
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 30px auto;
+            gap: 10px;
+        }
+        .custom-img {
+            max-width: 280px;
+            margin: 0;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        /* Botão personalizado */
+          .meu-botao {
+            display: inline-block;
+            background-color: #2b3b52;
+            color: #d0d6e1;
+            padding: 10px 20px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .meu-botao:hover {
+            background-color: #3c4e72;
+        }
+    </style>
+</head>
+<body>
+<div class="container py-4">
+    
+    <div class="logo-container">
+        <img src="/static/logo.png" alt="Logo" class="custom-img">
+    </div>
+    
+    <h1 class="mb-4">Board Station</h1>
+
+    
+    <form class="row g-3 mb-4" method="get">
+        <div class="col-md-4">
+            <input type="text" name="termo" value="{{ request.args.get('termo','') }}" class="form-control" placeholder="Buscar descrição...">
+        </div>
+        <div class="col-md-3">
+            <select name="status" class="form-select">
+                <option value="">Todos os status</option>
+                <option {% if request.args.get('status')=='Novo' %}selected{% endif %}>Novo</option>
+                <option {% if request.args.get('status')=='Em andamento' %}selected{% endif %}>Em andamento</option>
+                <option {% if request.args.get('status')=='Resolvido' %}selected{% endif %}>Resolvido</option>
+                <option {% if request.args.get('status')=='Fechado' %}selected{% endif %}>Fechado</option>
+                <option {% if request.args.get('status')=='Rejeitado' %}selected{% endif %}>Rejeitado</option>
+            </select>
+        </div>
+        <div class="col-md-auto d-flex gap-2">
+            <button type="submit" class="btn btn-secondary">
+                <i class="bi bi-search"></i> Filtrar
+            </button>
+            <a href="{{ url_for('adicionar') }}" class="meu-botao">
+                ➕ {{ texto_botao_adicionar or "Adicionar Novo Bug" }}
+            </a>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table table-dark table-striped table-bordered custom-table align-middle">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                    <th>Status</th>
+                    <th>Responsável</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bug in bugs %}
+                <tr>
+                    <td>{{ bug.id }}</td>
+                    <td>{{ bug.data }}</td>
+                    <td>{{ bug.descricao }}</td>
+                    
+                    <td>
+                        <span class="
+                            {% if bug.status == 'Em andamento' %}
+                            badge bg-warning
+                            {% elif bug.status == 'Resolvido' %}
+                            badge bg-success
+                            {% elif bug.status == 'Fechado' %}
+                            badge bg-secondary
+                            {% elif bug.status == 'Rejeitado' %}
+                            badge bg-danger
+                            {% else %}
+                            badge bg-light text-dark
+                            {% endif %}
+                        ">
+                            {{ bug.status }}
+                        </span>
+                    </td>
+                    <td>{{ bug.responsavel }}</td>
+                    <td>
+                        <a href="{{ url_for('atualizar', id=bug.id) }}" class="btn btn-sm btn-warning">
+                            <i class="bi bi-pencil-square"></i> Atualizar
+                        </a>
+                        <a href="{{ url_for('editar', id=bug.id) }}" class="btn btn-sm btn-info">
+                            <i class="bi bi-pencil"></i> Editar
+                        </a>
+                        <a href="{{ url_for('excluir', id=bug.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este bug?');">
+                            <i class="bi bi-trash"></i> Excluir
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
