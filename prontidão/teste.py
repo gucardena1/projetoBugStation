@@ -14,7 +14,7 @@ responsaveis_emails = {
     "Gabriel": "gabriel@it4d.com.br",
     "Gabriela": "gabriela.cleim@it4d.com.br",
     "Matheus": "matheus@it4d.com.br",
-    "David": "davidson123@it4d.com.br"
+    "David": "davidson@it4d.com.br"
 }
 
 ARQUIVO = "bugs.csv"
